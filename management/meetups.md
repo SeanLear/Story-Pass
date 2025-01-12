@@ -16,6 +16,8 @@ All members present.
 6. Share project ideas with each other
 7. Mutually agree on project to pursue
 
+test branch pull request
+
 ### Outcome
 
 ### Open Questions
