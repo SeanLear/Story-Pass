@@ -8,6 +8,7 @@ class Grid:
         self.app = app
         self.accept = accept
         self.deny = deny
+        self.attempts = 3
 
         # create button list
         self.button_info = [["../imgs/apartment.webp", "apartment"], ["../imgs/apple.webp", "apple"], 
@@ -59,7 +60,16 @@ class Grid:
         }
 
         # set pass hold
-        self.entered_pass = ""
+        self.entered_pass = []
+
+        # button counter
+       # self.bttn_counter = tk.IntVar()
+       # self.bttn_counter.set(6)
+        self.bttn_counter = 6
+
+        # feedback string
+        self.feedback = tk.StringVar()
+        self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
 
         # set up window
         self.createWidgets()
@@ -75,6 +85,9 @@ class Grid:
         # title
         title = tk.Label(title_frame, text="Enter Password:")
         title.pack(pady=20)
+
+        show_pass = tk.Label(title_frame, textvariable=self.feedback)
+        show_pass.pack(pady=10)
 
         # pack grid frame
         grid_frame = tk.Frame(self.app)
@@ -104,18 +117,43 @@ class Grid:
 
         # grid
         
+        # create frame for button
+        bttn_frame = tk.Frame(self.app)
+        bttn_frame.pack()
+
+        # create reset button
+        reset_button = tk.Button(bttn_frame, text="Reset Attempt", command=lambda: self.reset())
+        reset_button.pack()
+        
     def onClick(self, label):
-        self.entered_pass += self.image_map[label]
+        self.entered_pass.append(self.image_map[label])
+        self.bttn_counter -= 1
+        self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
 
         # auth password
-        if len(self.entered_pass) == 12:
+        if len(self.entered_pass) == 6:
 
+            # if not authenticated
             print(self.entered_pass)
-            messagebox.showerror("Error", "Invalid Password")
-            self.entered_pass = ""
+            if self.attempts > 0:
+                messagebox.showerror("Error", "Invalid Password\n Attempts Remaining: " + str(self.attempts))
+                self.entered_pass = []
+                self.bttn_counter = 6
+                self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
+                self.attempts -= 1
+            else:
+                messagebox.showerror("Error", "Invalid Password\n 0 Attempts Remaining, Returing to Landing Page")
 
             # destroy widgets and switch to landing page
             
             #for widget in self.app.winfo_children():
                 #widget.destroy()
             #self.deny()
+
+    def reset(self):
+        # this function resets the entered password
+
+        print("reseting entered password")
+        self.entered_pass = []
+        self.bttn_counter = 6
+        self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
