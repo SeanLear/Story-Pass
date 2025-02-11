@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 
 class UserInfo:
-    def __init__(self, app):
+    def __init__(self, app, username):
         self.app = app
         self.app.title("User Database")
         self.app.geometry("1400x800")
+        self.username = username
         
         # Create a frame for buttons
         button_frame = tk.Frame(self.app)
