@@ -2,13 +2,15 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import random
 from tkinter import messagebox
+from signUp import SignUp
 
 class Grid:
-    def __init__(self, app, accept, deny):
+    def __init__(self, app, accept, deny, username):
         self.app = app
         self.accept = accept
         self.deny = deny
         self.attempts = 3
+        self.username = username
 
         # create button list
         self.button_info = [["../imgs/apartment.webp", "apartment"], ["../imgs/apple.webp", "apple"], 
@@ -132,23 +134,30 @@ class Grid:
 
         # auth password
         if len(self.entered_pass) == 6:
+            # hard code password
+            if self.entered_pass == ["D;", "+U", "x*", "4Q", "Z(", ".O"]:
+                messagebox.showinfo("Success", "Login Successful")
 
-            # if not authenticated
-            print(self.entered_pass)
-            if self.attempts > 0:
-                messagebox.showerror("Error", "Invalid Password\n Attempts Remaining: " + str(self.attempts))
-                self.entered_pass = []
-                self.bttn_counter = 6
-                self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
-                self.attempts -= 1
-            else:
-                messagebox.showerror("Error", "Invalid Password\n 0 Attempts Remaining, Returing to Landing Page")
-
-            # destroy widgets and switch to landing page
+                # delete widgets and switch to user info
+                for widget in self.app.winfo_children():
+                    widget.destroy()
+                self.accept(self.app, self.username)
             
-            #for widget in self.app.winfo_children():
-                #widget.destroy()
-            #self.deny()
+            else:
+                # if not authenticated
+                if self.attempts > 0:
+                    messagebox.showerror("Error", "Invalid Password\n Attempts Remaining: " + str(self.attempts))
+                    self.entered_pass = []
+                    self.bttn_counter = 6
+                    self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
+                    self.attempts -= 1
+                else:
+                    messagebox.showerror("Error", "Invalid Password\n 0 Attempts Remaining, Returing to Landing Page")
+
+                    # destroy widgets and switch to landing page
+                    for widget in self.app.winfo_children():
+                        widget.destroy()
+                    self.deny(self.app, Grid, SignUp)
 
     def reset(self):
         # this function resets the entered password

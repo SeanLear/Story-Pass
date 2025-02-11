@@ -3,12 +3,13 @@ from PIL import Image, ImageTk
 import random
 from tkinter import messagebox
 import platform
+from landingPage import LandingPage
 
 class SignUp:
-    def __init__(self, app, success, deny):
+    def __init__(self, app, back, grid):
         self.app = app
-        self.success = success
-        self.deny = deny
+        self.back = back
+        self.grid = grid
         self.feedback = tk.StringVar()
         self.bttn_counter = 6
         self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
@@ -261,7 +262,10 @@ class SignUp:
     def submit(self):
         # this function will submit the account creation to database and bring user
         # back to the landing page
-        pass
+        
+        for widget in self.app.winfo_children():
+            widget.destroy()
+        self.back(self.app, self.grid, SignUp)
 
     def bind_mousewheel(self):
         # find out system and bind mousewheel accordingly

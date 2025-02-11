@@ -1,13 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
-
-# revert main before pushing to not mess things up
+from user_info import UserInfo
 
 
 class LandingPage:
     def __init__(self, app, grid_window, create_window):
         self.app = app
-        self.change_window = grid_window
+        self.grid_window = grid_window
         self.create_window = create_window
         self.createWidgets()
 
@@ -31,7 +30,7 @@ class LandingPage:
         button_frame.pack()
 
         # create account button
-        create_account = tk.Button(button_frame, text = "Create Account", command = self.create_window)
+        create_account = tk.Button(button_frame, text = "Create Account", command = self.accountCreation)
         create_account.pack(side = "left", padx = 10)
 
         # login button
@@ -45,7 +44,10 @@ class LandingPage:
 
         # open grid for password
         if user == "admin":
-            self.change_window()
+            # destroy widgets and switch to grid
+            for widget in self.app.winfo_children():
+                widget.destroy()
+            self.grid_window(self.app, UserInfo, LandingPage, user)
         
         # throw an error
         # create custom alert later?
@@ -53,3 +55,8 @@ class LandingPage:
         else:
             self.username.delete(0, tk.END)
             messagebox.showerror("Error", "Invalid Username")
+
+    def accountCreation(self):
+        for widget in self.app.winfo_children():
+            widget.destroy()
+        self.create_window(self.app, LandingPage, self.grid_window)
