@@ -1,4 +1,7 @@
 import tkinter as tk
+from landingPage import LandingPage
+from grid import Grid
+from signUp import SignUp
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -15,7 +18,7 @@ class MainApp(tk.Tk):
         #window
 
         # pass until username window is pushed
-        pass
+        LandingPage(self, Grid, SignUp)
 
     def grid(self):
         # this funciton will start the grid window if the user passes the 
