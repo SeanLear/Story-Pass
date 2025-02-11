@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-class UserDatabase:
+class UserInfo:
     def __init__(self, app):
         self.app = app
         self.app.title("User Database")
@@ -49,5 +49,5 @@ class UserDatabase:
 # Run the application
 if __name__ == "__main__":
     root = tk.Tk()
-    UserDatabase(root)
+    UserInfo(root)
     root.mainloop()
