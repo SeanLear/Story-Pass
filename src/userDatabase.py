@@ -6,8 +6,6 @@ class UserDatabase:
         self.app = app
         self.app.title("User Database")
         self.app.geometry("1400x800")
-
-        self.app.color
         
         # Create a frame for buttons
         button_frame = tk.Frame(self.app)
