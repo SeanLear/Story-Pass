@@ -2,6 +2,7 @@ import tkinter as tk
 from landingPage import LandingPage
 from grid import Grid
 from signUp import SignUp
+from authentication_database import create_authentication_database
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -16,6 +17,9 @@ class MainApp(tk.Tk):
     def start(self):
         # this function starts the login process by bringing up the username
         #window
+
+        # create auth database if doesn't exist already
+        create_authentication_database()
 
         # pass until username window is pushed
         LandingPage(self, Grid, SignUp)
