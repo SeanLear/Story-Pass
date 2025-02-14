@@ -268,7 +268,7 @@ class SignUp:
         # this function will submit the account creation to database and bring user
         # back to the landing page
 
-        if (create_account(self.username.get(), self.entered_pass[0], self.entered_pass[1], self.entered_pass[2], self.entered_pass[3], self.entered_pass[4], self.entered_pass[5])):
+        if (create_account(self.username.get(), self.entered_pass[0], self.entered_pass[1], self.entered_pass[2], self.entered_pass[3], self.entered_pass[4], self.entered_pass[5]) == 1):
             messagebox.showinfo("Success", "Account Creation Successful, please Log In")
         else:
             messagebox.showerror("Error", "Account Creation Failed, Username Already Taken")
