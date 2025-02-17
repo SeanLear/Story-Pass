@@ -29,7 +29,6 @@ def get_encryption_key(username: str, password: str) -> bytes:
     '''
     result = cursor.execute(query)
     result_tuple = result.fetchone()
-    #print(result_tuple)
     encrypted_AES_256_key = result_tuple[0]
     PBKDF2_salt = result_tuple[1]
     nonce = result_tuple[2]
@@ -76,6 +75,43 @@ def get_encryption_key(username: str, password: str) -> bytes:
 
     return decrypted_AES_256_key
 
+def check_account_name(username: str, password: str, account_name: str) -> int:
+    """
+    Check if an entry matching the provided account_name exists in the user's
+    database.
+
+    args:
+        username: The username for an account stored in the authentication database.
+        password: User's authentication password associated with their account.
+        account_name: The account_name to check.
+    returns:
+        1: Account_name does NOT exist in the authentication database.
+        -1: Account_name ALREADY exists in the authentication database.
+    """
+    # Get database encryption key.
+    decrypted_AES_256_key = get_encryption_key(username, password)
+    # Connect to user database.
+    connection = sqlite3.connect(f"{username}.db")
+    cursor = connection.cursor()
+    # Decrypt database.
+    decrypt_command = f'''
+    PRAGMA key = "X'{decrypted_AES_256_key.hex()}'"
+    '''
+    cursor.execute(decrypt_command)
+    # Get the account name from database, if exists.
+    check_username = f'''
+    SELECT account_name
+    FROM accounts
+    WHERE account_name = '{account_name}'
+    '''
+    result = cursor.execute(check_username)
+
+    # Return 1 if username does NOT exist in the database, otherwise -1.
+    if result.fetchone() is None:
+        return 1
+    else:
+        return -1
+
 def get_user_data(username: str, password: str) -> List[Tuple]:
     """
     Get all of the data stored in the user's database as a list of tuples (one for each
@@ -108,33 +144,7 @@ def get_user_data(username: str, password: str) -> List[Tuple]:
 
     return result_tuple
 
-def check_account_name(account_name: str) -> int:
-    """
-    Check if an entry matching the provided account_name exists in the user's
-    database.
-
-    args:
-        account_name: The account_name to check.
-    returns:
-        1: Account_name does NOT exist in the authentication database.
-        -1: Account_name ALREADY exists in the authentication database.
-    """
-    connection = sqlite3.connect("authentication.db")
-    cursor = connection.cursor()
-    check_username = f'''
-    SELECT account_name
-    FROM accounts
-    WHERE account_name = '{account_name}'
-    '''
-    result = cursor.execute(check_username)
-
-    # Return 1 if username does NOT exist in the database, otherwise -1.
-    if result.fetchone() is None:
-        return 1
-    else:
-        return -1
-
-def add_user_data(username: str, password: str, account_name: str, account_username: str, account_password: str) -> None:
+def add_user_data(username: str, password: str, account_name: str, account_username: str, account_password: str) -> int:
     """
     Add an entry to the user's database.
     args:
@@ -143,56 +153,65 @@ def add_user_data(username: str, password: str, account_name: str, account_usern
         account_name: The name of the account to be added to the user's database
         account_username: The username of the account to be added to the user's database.
         account_password: The password of the account to be added to the user's database.
+    returns:
+        1: Entry was successfully added to user's database.
+        -1: Entry could not be added to the database, account_name already exists.
     """
-    # Get database encryption key.
-    decrypted_AES_256_key = get_encryption_key(username, password)
-    # Connect to user database.
-    connection = sqlite3.connect(f"{username}.db")
-    cursor = connection.cursor()
-    # Decrypt database.
-    decrypt_command = f'''
-    PRAGMA key = "X'{decrypted_AES_256_key.hex()}'"
-    '''
-    # Get data contained in database.
-    query = f'''
-    INSERT INTO accounts VALUES (?, ?, ?)
-    '''
-    cursor.execute(decrypt_command)
-    cursor.execute(query, (account_name,
-                           account_username,
-                           account_password))
-    connection.commit()
-    connection.close()
+    # Only add the entry if the account_name doesn't already exist in the database.
+    if check_account_name(username, password, account_name) == 1:
+        # Get database encryption key.
+        decrypted_AES_256_key = get_encryption_key(username, password)
+        # Connect to user database.
+        connection = sqlite3.connect(f"{username}.db")
+        cursor = connection.cursor()
+        # Decrypt database.
+        decrypt_command = f'''
+        PRAGMA key = "X'{decrypted_AES_256_key.hex()}'"
+        '''
+        # Add data to the database.
+        query = f'''
+        INSERT INTO accounts VALUES (?, ?, ?)
+        '''
+        cursor.execute(decrypt_command)
+        cursor.execute(query, (account_name,
+                            account_username,
+                            account_password))
+        connection.commit()
+        connection.close()
+        return 1
+    else:
+        return -1
 
-def delete_user_data(username: str, password: str, account_name: str):
+def delete_user_data(username: str, password: str, account_name: str) -> int:
     """
     Delete an entry from the user's database.
     args:
         username: The username for an account stored in the authentication database.
         password: User's authentication password associated with their account.
         account_name: The name of the account to be deleted from the user's database
+    returns:
+        1: Entry was successfully deleted.
+        -1: Entry could not be deleted (does not exist).
     """
-    # Get database encryption key.
-    decrypted_AES_256_key = get_encryption_key(username, password)
-    # Connect to user database.
-    connection = sqlite3.connect(f"{username}.db")
-    cursor = connection.cursor()
-    # Decrypt database.
-    decrypt_command = f'''
-    PRAGMA key = "X'{decrypted_AES_256_key.hex()}'"
-    '''
-    # Delete user database entry
-    query = f'''
-    DELETE FROM accounts
-    WHERE account_name = '{account_name}'
-    '''
-    cursor.execute(decrypt_command)
-    cursor.execute(query)
-    connection.commit()
-    connection.close()
-
-def main():
-    ad.create_authentication_database()
-
-if __name__ == "__main__":
-    main()
+    if check_account_name(username, password, account_name) == -1:
+        # Get database encryption key.
+        decrypted_AES_256_key = get_encryption_key(username, password)
+        # Connect to user database.
+        connection = sqlite3.connect(f"{username}.db")
+        cursor = connection.cursor()
+        # Decrypt database.
+        decrypt_command = f'''
+        PRAGMA key = "X'{decrypted_AES_256_key.hex()}'"
+        '''
+        # Delete user database entry
+        query = f'''
+        DELETE FROM accounts
+        WHERE account_name = '{account_name}'
+        '''
+        cursor.execute(decrypt_command)
+        cursor.execute(query)
+        connection.commit()
+        connection.close()
+        return 1
+    else:
+        return -1

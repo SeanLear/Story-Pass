@@ -153,7 +153,6 @@ def create_account(username: str, p_1: str, p_2: str, p_3: str, p_4: str, p_5: s
         cursor.execute(create_table)
         connection.commit()
         connection.close()
-
         return 1
     else:
         return -1
