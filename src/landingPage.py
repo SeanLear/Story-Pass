@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from user_info import UserInfo
+from authentication_database import check_username
+
+
 
 
 class LandingPage:
@@ -43,7 +46,7 @@ class LandingPage:
         user = self.username.get()
 
         # open grid for password
-        if user == "admin":
+        if (check_username(user)) == -1:
             # destroy widgets and switch to grid
             for widget in self.app.winfo_children():
                 widget.destroy()
@@ -52,7 +55,7 @@ class LandingPage:
         # throw an error
         # create custom alert later?
         # check number of attempts later
-        else:
+        elif (check_username(user)) == 1:
             self.username.delete(0, tk.END)
             messagebox.showerror("Error", "Invalid Username")
 

@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 import random
 from tkinter import messagebox
 from signUp import SignUp
+from authentication_database import check_account_password
 
 class Grid:
     def __init__(self, app, accept, deny, username):
@@ -135,7 +136,7 @@ class Grid:
         # auth password
         if len(self.entered_pass) == 6:
             # hard code password
-            if self.entered_pass == ["D;", "+U", "x*", "4Q", "Z(", ".O"]:
+            if (check_account_password(self.username, self.entered_pass[0], self.entered_pass[1], self.entered_pass[2], self.entered_pass[3], self.entered_pass[4], self.entered_pass[5])) == 1:
                 messagebox.showinfo("Success", "Login Successful")
 
                 # delete widgets and switch to user info
