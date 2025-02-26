@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from user_info import UserInfo
 from authentication_database import check_username
+from PIL import Image, ImageTk
 
 
 
@@ -14,14 +15,20 @@ class LandingPage:
         self.createWidgets()
 
     def createWidgets(self):
+        # create icon 
+        png = Image.open("../imgs/StoryPass_Logo.webp")
+        png.save("../imgs/StoryPass_Logo.png")
+        icon = ImageTk.PhotoImage(file="../imgs/StoryPass_Logo.png")
+        self.app.wm_iconphoto(True, icon)
+
         #landingPage = tk.Toplevel(app)
 
         # create the landing page
-        self.app.title("Landing Page")
+        self.app.title("Story-Pass - Landing Page")
         self.app.geometry("1400x800")
 
         # title
-        title = tk.Label(self.app, text="Title Here")
+        title = tk.Label(self.app, text="Story-Pass")
         title.pack(pady=20)
 
         # username field
@@ -37,7 +44,7 @@ class LandingPage:
         create_account.pack(side = "left", padx = 10)
 
         # login button
-        login = tk.Button(button_frame, text = "login", command= self.authUser)
+        login = tk.Button(button_frame, text = "Login", command= self.authUser)
         login.pack(side = "left", padx = 20)
 
   
