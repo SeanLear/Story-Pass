@@ -126,7 +126,7 @@ class SignUp:
         self.username.pack(pady=20)
 
         # bind username to typing for valid submit checking
-        self.username.bind("<KeyRelease>", lambda event: self.check_inputs())
+       # self.username.bind("<KeyRelease>", lambda event: self.check_inputs())
 
         pass_title = tk.Label(username_frame, text="Enter Password:")
         pass_title.pack(pady=20)
@@ -183,12 +183,16 @@ class SignUp:
         bttn_frame = tk.Frame(scroll_frame)
         bttn_frame.pack()
 
+        # create cancel button
+        cancel_bttn = tk.Button(bttn_frame, text = "Cancel", command = lambda: self.leave())
+        cancel_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
+ 
         # create reset button
         reset_bttn = tk.Button(bttn_frame, text = "Reset Attempt", command = lambda: self.reset())
         reset_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
 
         # create submit button
-        self.submit_bttn = tk.Button(bttn_frame, state = tk.DISABLED, text = "Submit Account", command = lambda: self.submit())
+        self.submit_bttn = tk.Button(bttn_frame, text = "Submit Account", command = lambda: self.submit())
         self.submit_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
 
         # set up scroll
@@ -232,7 +236,7 @@ class SignUp:
 
                 # disable all buttons
                 for name, bttn in self.buttons.items():
-                    bttn.config(image=self.faded_images[name], state=tk.DISABLED)
+                        bttn.config(image=self.faded_images[name], state=tk.DISABLED)
                 
                 # set done flag
                 self.check_inputs()
@@ -267,15 +271,24 @@ class SignUp:
     def submit(self):
         # this function will submit the account creation to database and bring user
         # back to the landing page
-
-        if (create_account(self.username.get(), self.entered_pass[0], self.entered_pass[1], self.entered_pass[2], self.entered_pass[3], self.entered_pass[4], self.entered_pass[5]) == 1):
-            messagebox.showinfo("Success", "Account Creation Successful, please Log In")
+        if self.username.get().strip() and self.complete:
+            if (create_account(self.username.get(), self.entered_pass[0], self.entered_pass[1], self.entered_pass[2], self.entered_pass[3], self.entered_pass[4], self.entered_pass[5]) == 1):
+                messagebox.showinfo("Success", "Account Creation Successful, please Log In")
+            else:
+                messagebox.showerror("Error", "Account Creation Failed, Username Already Taken")
+            
+            for widget in self.app.winfo_children():
+                widget.destroy()
+            self.back(self.app, self.grid, SignUp)
         else:
-            messagebox.showerror("Error", "Account Creation Failed, Username Already Taken")
-        
-        for widget in self.app.winfo_children():
+            messagebox.showerror("Error", "Please enter Username and Password before Submitting")
+
+    def leave(self):
+        # this function returns the user to the landing page
+        for widget in self.app.wifo_children():
             widget.destroy()
         self.back(self.app, self.grid, SignUp)
+            
 
     def bind_mousewheel(self):
         # find out system and bind mousewheel accordingly
@@ -296,8 +309,11 @@ class SignUp:
         self.canvas.yview_scroll(int(-1 * event.delta), "units")
 
     def check_inputs(self):
+        pass
         # allow for submit if user enters required info
-        if self.username.get().strip() and self.complete:
-            self.submit_bttn.config(state=tk.NORMAL)
-        else:
-            self.submit_bttn.config(state=tk.DISABLED)
+        #if self.username.get().strip() and self.complete:
+            #self.submit_bttn.config(state=tk.NORMAL)
+        #else:
+            #self.submit_bttn.config(state=tk.DISABLED)
+
+        
