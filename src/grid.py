@@ -126,7 +126,11 @@ class Grid:
 
         # create reset button
         reset_button = tk.Button(bttn_frame, text="Reset Attempt", command=lambda: self.reset())
-        reset_button.pack()
+        reset_button.pack(side = tk.LEFT, padx = 10,)
+
+        # create cancel button
+        cancel_button = tk.Button(bttn_frame, text="Cancel", command=lambda: self.leave())
+        cancel_button.pack(side=tk.LEFT, padx = 10)
         
     def onClick(self, label):
         self.entered_pass.append(self.image_map[label])
@@ -167,3 +171,10 @@ class Grid:
         self.entered_pass = []
         self.bttn_counter = 6
         self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
+
+
+    def leave(self):
+        # this function returns the user to the landing page
+        for widget in self.app.winfo_children():
+            widget.destroy()
+        self.deny(self.app, Grid, SignUp)
