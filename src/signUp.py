@@ -285,7 +285,7 @@ class SignUp:
 
     def leave(self):
         # this function returns the user to the landing page
-        for widget in self.app.wifo_children():
+        for widget in self.app.winfo_children():
             widget.destroy()
         self.back(self.app, self.grid, SignUp)
             
