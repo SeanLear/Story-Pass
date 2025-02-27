@@ -146,7 +146,7 @@ class Grid:
                 # delete widgets and switch to user info
                 for widget in self.app.winfo_children():
                     widget.destroy()
-                self.accept(self.app, self.username)
+                self.accept(self.app, self.username, self.entered_pass)
             
             else:
                 # if not authenticated
