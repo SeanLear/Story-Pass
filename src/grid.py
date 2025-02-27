@@ -78,18 +78,18 @@ class Grid:
         self.createWidgets()
 
     def createWidgets(self):
-        self.app.title("PassGrid")
-        self.app.geometry("1400x800")
+        self.app.title("Story-Pass Password Grid")
+        self.app.geometry("1150x800")
 
         # set up title frame
         title_frame = tk.Frame(self.app)
         title_frame.pack()
 
         # title
-        title = tk.Label(title_frame, text="Enter Password:")
-        title.pack(pady=20)
+        title = tk.Label(title_frame, text="Enter Password:", font = ("TkDefaultFont", 25))
+        title.pack(pady=10)
 
-        show_pass = tk.Label(title_frame, textvariable=self.feedback)
+        show_pass = tk.Label(title_frame, textvariable=self.feedback, font = ("TkDefaultFont", 14))
         show_pass.pack(pady=10)
 
         # pack grid frame
@@ -124,13 +124,13 @@ class Grid:
         bttn_frame = tk.Frame(self.app)
         bttn_frame.pack()
 
-        # create reset button
-        reset_button = tk.Button(bttn_frame, text="Reset Attempt", command=lambda: self.reset())
-        reset_button.pack(side = tk.LEFT, padx = 10,)
-
         # create cancel button
-        cancel_button = tk.Button(bttn_frame, text="Cancel", command=lambda: self.leave())
-        cancel_button.pack(side=tk.LEFT, padx = 10)
+        cancel_button = tk.Button(bttn_frame, text="Cancel", font = ("TkDefaultFont", 18), command=lambda: self.leave())
+        cancel_button.pack(side=tk.LEFT, padx = 10, pady = 10)
+
+        # create reset button
+        reset_button = tk.Button(bttn_frame, text="Reset Attempt", font = ("TkDefaultFont", 18), command=lambda: self.reset())
+        reset_button.pack(side = tk.LEFT, padx = 10, pady = 10)
         
     def onClick(self, label):
         self.entered_pass.append(self.image_map[label])
