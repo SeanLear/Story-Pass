@@ -9,7 +9,7 @@ class MainApp(tk.Tk):
         # setting up window and starting login process
         super().__init__()
         self.title("PlaceHolder Name")
-        self.geometry("1400x800")
+        self.geometry("800x500")
         self.current_window = None
         
         self.start()

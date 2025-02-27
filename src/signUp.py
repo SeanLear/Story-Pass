@@ -97,6 +97,9 @@ class SignUp:
 
 
     def createWidgets(self):
+        self.app.title("Story-Pass Sign Up")
+        self.app.geometry("1150x800")
+
         # create canvas for scroll
         canvas = tk.Canvas(self.app)
         canvas.pack(side = tk.LEFT, fill = tk.BOTH, expand=True)
@@ -108,7 +111,7 @@ class SignUp:
 
         # create scroll frame
         scroll_frame = tk.Frame(canvas)
-        canvas.create_window((0, 0), window = scroll_frame, width = 1400, height = 1100)
+        canvas.create_window((0, 0), window = scroll_frame, width = 1150, height = 1100)
 
         scroll_frame.bind("<Configure>", lambda event: self.update_scroll_region(event, canvas))
 
@@ -116,23 +119,23 @@ class SignUp:
         username_frame = tk.Frame(scroll_frame)
         username_frame.pack()
 
-        title = tk.Label(username_frame, text="Create Account")
-        title.pack(pady=20)
+        title = tk.Label(username_frame, text="Create Account", font = ("TkinterDefaultFont", 35))
+        title.pack(pady=10)
 
-        username_title = tk.Label(username_frame, text="Create Username")
-        username_title.pack(pady=20)
+        username_title = tk.Label(username_frame, text="Create Username:", font = ("TkinterDefaultFont", 20))
+        username_title.pack(pady=(20, 5))
 
-        self.username = tk.Entry(username_frame, width = 50)
-        self.username.pack(pady=20)
+        self.username = tk.Entry(username_frame, width = 50, bd = 2, relief = "solid")
+        self.username.pack(pady=(5, 20))
 
         # bind username to typing for valid submit checking
        # self.username.bind("<KeyRelease>", lambda event: self.check_inputs())
 
-        pass_title = tk.Label(username_frame, text="Enter Password:")
-        pass_title.pack(pady=20)
+        pass_title = tk.Label(username_frame, font = ("TkinterDefaultFont", 25), text="Create Password:")
+        pass_title.pack(pady=(40, 5))
 
-        pass_counter = tk.Label(username_frame, textvariable=self.feedback)
-        pass_counter.pack(pady=20)
+        pass_counter = tk.Label(username_frame, font = ("TkinterDefaultFont", 14), textvariable=self.feedback)
+        pass_counter.pack(pady=5)
 
 
         # create Password Frame
@@ -184,15 +187,15 @@ class SignUp:
         bttn_frame.pack()
 
         # create cancel button
-        cancel_bttn = tk.Button(bttn_frame, text = "Cancel", command = lambda: self.leave())
+        cancel_bttn = tk.Button(bttn_frame, text = "Cancel", font = ("TkDefaultFont", 18), command = lambda: self.leave())
         cancel_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
  
         # create reset button
-        reset_bttn = tk.Button(bttn_frame, text = "Reset Attempt", command = lambda: self.reset())
+        reset_bttn = tk.Button(bttn_frame, text = "Reset Attempt", font = ("TkDefaultFont", 18), command = lambda: self.reset())
         reset_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
 
         # create submit button
-        self.submit_bttn = tk.Button(bttn_frame, text = "Submit Account", command = lambda: self.submit())
+        self.submit_bttn = tk.Button(bttn_frame, text = "Submit Account", font = ("TkDefaultFont", 18), command = lambda: self.submit())
         self.submit_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
 
         # set up scroll
