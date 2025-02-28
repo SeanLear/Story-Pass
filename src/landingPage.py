@@ -29,24 +29,26 @@ class LandingPage:
         self.app.geometry("800x500")
 
         # title
+        SignUp
         title = tk.Label(self.app, text="Story-Pass", font=("TkDefaultFont", 55, "bold"))
         title.pack(pady=(100, 20))
 
+
         # username field
-        self.username = tk.Entry(self.app, width = 50, bd = 2, relief = "solid")
-        self.username.pack(pady=20)
-        self.username.focus_set()
+        #self.username = tk.Entry(self.app, width = 50, bd = 2, relief = "solid")
+        #self.username.pack(pady=20)
+        #self.username.focus_set()
 
         # get buttons aligned 
         button_frame = tk.Frame(self.app)
         button_frame.pack()
 
         # create account button
-        create_account = tk.Button(button_frame, text = "Create Account", font = ("TkDefaultFont", 16), command = self.accountCreation)
+        create_account = tk.Button(button_frame, text = "Create Account", font = ("TkDefaultFont", 27), command = self.accountCreation)
         create_account.pack(side = "left", padx = 10)
 
         # login button
-        login = tk.Button(button_frame, text = "Login", font = ("TkDefaultFont", 16), command= self.login)
+        login = tk.Button(button_frame, text = "Login", font = ("TkDefaultFont", 27), command= self.login)
         login.pack(side = "left", padx = 20)
 
   
