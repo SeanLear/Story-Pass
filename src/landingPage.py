@@ -29,8 +29,10 @@ class LandingPage:
         self.app.geometry("800x500")
 
         # title
-        title = tk.Label(self.app, text="Story-Pass", font=("TkDefaultFont", 60))
-        title.pack(pady=(140, 20))
+        SignUp
+        title = tk.Label(self.app, text="Story-Pass", font=("TkDefaultFont", 55, "bold"))
+        title.pack(pady=(100, 20))
+
 
         # username field
         #self.username = tk.Entry(self.app, width = 50, bd = 2, relief = "solid")

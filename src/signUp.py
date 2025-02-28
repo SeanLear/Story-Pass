@@ -93,53 +93,54 @@ class SignUp:
         self.createWidgets()
 
     def update_scroll_region(self, event, canvas):
-        canvas.configure(scrollregion=canvas.bbox("all"))
+        #canvas.configure(scrollregion=canvas.bbox("all"))
+        pass
 
 
     def createWidgets(self):
         self.app.title("Story-Pass Sign Up")
-        self.app.geometry("1150x800")
+        self.app.geometry("950x900")
 
         # create canvas for scroll
-        canvas = tk.Canvas(self.app)
-        canvas.pack(side = tk.LEFT, fill = tk.BOTH, expand=True)
+        #canvas = tk.Canvas(self.app)
+        #canvas.pack(side = tk.LEFT, fill = tk.BOTH, expand=True)
 
         # scrollbar
-        scrollbar = tk.Scrollbar(self.app, orient=tk.VERTICAL, command=canvas.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        canvas.configure(yscrollcommand=scrollbar.set)
+        #scrollbar = tk.Scrollbar(self.app, orient=tk.VERTICAL, command=canvas.yview)
+        #scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        #canvas.configure(yscrollcommand=scrollbar.set)
 
         # create scroll frame
-        scroll_frame = tk.Frame(canvas)
-        canvas.create_window((0, 0), window = scroll_frame, width = 1150, height = 1100)
+        #scroll_frame = tk.Frame(canvas)
+        #canvas.create_window((0, 0), window = scroll_frame, width = 1150, height = 1100)
 
-        scroll_frame.bind("<Configure>", lambda event: self.update_scroll_region(event, canvas))
+        #scroll_frame.bind("<Configure>", lambda event: self.update_scroll_region(event, canvas))
 
         # create frame for username and title
-        username_frame = tk.Frame(scroll_frame)
+        username_frame = tk.Frame(self.app)
         username_frame.pack()
 
-        title = tk.Label(username_frame, text="Create Account", font = ("TkinterDefaultFont", 35))
-        title.pack(pady=10)
+        title = tk.Label(username_frame, text="Create Account", font = ("TkinterDefaultFont", 30, "bold"))
+        title.pack(pady=(10))
 
-        username_title = tk.Label(username_frame, text="Create Username:", font = ("TkinterDefaultFont", 20))
-        username_title.pack(pady=(20, 5))
+        username_title = tk.Label(username_frame, text="Create Username:", font = ("TkinterDefaultFont", 18))
+        username_title.pack(pady=(10, 5))
 
         self.username = tk.Entry(username_frame, width = 50, bd = 2, relief = "solid")
-        self.username.pack(pady=(5, 20))
+        self.username.pack(pady=(5, 0))
 
         # bind username to typing for valid submit checking
        # self.username.bind("<KeyRelease>", lambda event: self.check_inputs())
 
-        pass_title = tk.Label(username_frame, font = ("TkinterDefaultFont", 25), text="Create Password:")
-        pass_title.pack(pady=(40, 5))
+        pass_title = tk.Label(username_frame, font = ("TkinterDefaultFont", 20), text="Create Password:")
+        pass_title.pack(pady=(20, 5))
 
         pass_counter = tk.Label(username_frame, font = ("TkinterDefaultFont", 14), textvariable=self.feedback)
         pass_counter.pack(pady=5)
 
 
         # create Password Frame
-        grid_frame = tk.Frame(scroll_frame)
+        grid_frame = tk.Frame(self.app)
         grid_frame.pack()
 
         # randomize button list
@@ -154,7 +155,7 @@ class SignUp:
 
             # create image
             img = Image.open(path)
-            img = img.resize((100, 100))
+            img = img.resize((75, 75))
             photo = ImageTk.PhotoImage(img)
 
             # store photo
@@ -183,7 +184,7 @@ class SignUp:
             self.buttons[click] = btn
 
         # create frame for buttons
-        bttn_frame = tk.Frame(scroll_frame)
+        bttn_frame = tk.Frame(self.app)
         bttn_frame.pack()
 
         # create cancel button
@@ -199,10 +200,10 @@ class SignUp:
         self.submit_bttn.pack(side=tk.LEFT, padx = 10, pady = 20)
 
         # set up scroll
-        canvas.config(scrollregion=canvas.bbox("all"))
+        #canvas.config(scrollregion=canvas.bbox("all"))
 
         # bind mousewheel
-        self.bind_mousewheel
+        #self.bind_mousewheel
 
     def onClick(self, label):
         if not self.check:
