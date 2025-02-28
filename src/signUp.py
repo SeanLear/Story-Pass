@@ -121,7 +121,7 @@ class SignUp:
         username_frame.pack()
 
         title = tk.Label(username_frame, text="Create Account", font = ("TkinterDefaultFont", 30, "bold"))
-        title.pack(pady=(0, 10))
+        title.pack(pady=(10))
 
         username_title = tk.Label(username_frame, text="Create Username:", font = ("TkinterDefaultFont", 18))
         username_title.pack(pady=(10, 5))
@@ -133,7 +133,7 @@ class SignUp:
        # self.username.bind("<KeyRelease>", lambda event: self.check_inputs())
 
         pass_title = tk.Label(username_frame, font = ("TkinterDefaultFont", 20), text="Create Password:")
-        pass_title.pack(pady=(35, 5))
+        pass_title.pack(pady=(20, 5))
 
         pass_counter = tk.Label(username_frame, font = ("TkinterDefaultFont", 14), textvariable=self.feedback)
         pass_counter.pack(pady=5)
