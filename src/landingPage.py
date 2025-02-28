@@ -29,7 +29,6 @@ class LandingPage:
         self.app.geometry("800x500")
 
         # title
-        SignUp
         title = tk.Label(self.app, text="Story-Pass", font=("TkDefaultFont", 55, "bold"))
         title.pack(pady=(100, 20))
 
