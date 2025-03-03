@@ -97,6 +97,10 @@ class UserInfo:
             self.tree.heading(col, text=col, anchor=tk.W)
             self.tree.column(col, width=200, anchor=tk.W)
 
+        user_data = ud.get_user_data(self.username, self.password)
+        for row in user_data:
+            self.tree.insert('', tk.END, values=row)
+
         self.tree.pack(padx=10, pady=5, fill=tk.BOTH, expand=True)
         
         
