@@ -6,8 +6,6 @@ from PIL import Image, ImageTk
 from username import Username
 
 
-
-
 class LandingPage:
     def __init__(self, app, grid_window, create_window):
         self.app = app

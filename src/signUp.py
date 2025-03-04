@@ -3,7 +3,6 @@ from PIL import Image, ImageTk
 import random
 from tkinter import messagebox
 import platform
-from landingPage import LandingPage
 from authentication_database import create_account
 
 class SignUp:

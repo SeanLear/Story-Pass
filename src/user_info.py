@@ -3,6 +3,7 @@ from tkinter import ttk
 import user_database as ud
 from tkinter import simpledialog
 from tkinter import messagebox
+from signUp import SignUp
 
 # When add account button is pressed then databse function is called and
 # adds that information to the database, when delete account button is pressed
@@ -11,10 +12,12 @@ from tkinter import messagebox
 # displayed on a table of all added accounts
 
 class UserInfo:
-    def __init__(self, app, username: str, password: str):
+    def __init__(self, app, username: str, password: str, landing, grid_pass):
         self.app = app
         self.username = username
         self.password = ""
+        self.landing = landing
+        self.grid_pass = grid_pass
         if isinstance(password, list):
             for char in password:
                 self.password += char  # Convert list to a single string if needed
@@ -71,6 +74,14 @@ class UserInfo:
                 break
 
         messagebox.showinfo("Success", f"{user_input} deleted successfully!")
+    
+
+    def leave_page(self):
+        # return to landing page
+        for widget in self.app.winfo_children():
+            widget.destroy()
+        #self.back(self.app, self.grid, SignUp)
+        self.landing(self.app, self.grid_pass, SignUp)
         
 
     def createWidgets(self):
@@ -85,7 +96,7 @@ class UserInfo:
         self.delete_button = tk.Button(button_frame, text="Delete Account", width=15, command=self.del_info)
         self.delete_button.pack(side=tk.LEFT, padx=5)
         
-        self.logout_button = tk.Button(button_frame, text="Logout", width=15, command=self.app.quit)
+        self.logout_button = tk.Button(button_frame, text="Logout", width=15, command=self.leave_page)
         self.logout_button.pack(side=tk.RIGHT, padx=5)
         
         # Create a treeview for the table
