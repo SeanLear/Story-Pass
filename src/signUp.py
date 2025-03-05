@@ -218,7 +218,7 @@ class SignUp:
 
         # auth password
         if len(self.entered_pass) == 6 and len(self.second_pass) == 0:
-                print(self.entered_pass)
+                #print(self.entered_pass)
                 messagebox.showinfo("Success", "Please Re-enter password")
                 #self.entered_pass = []
                 self.bttn_counter = 6
@@ -261,7 +261,7 @@ class SignUp:
 
         if not self.complete:
 
-            print("reseting entred password")
+            #print("reseting entred password")
             self.entered_pass = []
             self.bttn_counter = 6
             self.feedback.set("Remaining Choices: " + str(self.bttn_counter))
@@ -305,7 +305,7 @@ class SignUp:
             self.canvas.bind_all("<Button-4>", self.on_mousewheel_linux_up)
             self.canvas.bind_all("<Button-5>", self.on_mousewheel_linux_down)
         else:
-            print("Cant bind mousewheel")
+            #print("Cant bind mousewheel")
 
     def on_mousewheel_mac(self, event):
         # scroll for macOS
