@@ -306,6 +306,7 @@ class SignUp:
             self.canvas.bind_all("<Button-5>", self.on_mousewheel_linux_down)
         else:
             #print("Cant bind mousewheel")
+            pass
 
     def on_mousewheel_mac(self, event):
         # scroll for macOS
