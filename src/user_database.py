@@ -1,3 +1,8 @@
+"""
+Author: Sean Lear
+Course: CS 433
+Term: Winter 25
+"""
 import secrets
 from typing import List, Tuple
 

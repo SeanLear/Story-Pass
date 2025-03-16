@@ -1,3 +1,8 @@
+"""
+Author: Jack Sedillos
+Course: CS 433
+Term: Winter 25
+"""
 import tkinter as tk
 from tkinter import ttk
 import user_database as ud

@@ -1,3 +1,8 @@
+"""
+Author: Will Marceau
+Course: CS 433
+Term: Winter 25
+"""
 import tkinter as tk
 from landingPage import LandingPage
 from grid import Grid
