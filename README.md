@@ -7,7 +7,7 @@ able to recall their password when compared to a conventional textual password.
 
 ## Requirements
 
-Story-Pass is officially supported on MacOS and requires the following:
+Story-Pass is officially supported on MacOS (x86) and requires the following:
 
 1. Python3 (Developed on 3.13)
 2. Python's virtual environment module venv
@@ -36,6 +36,8 @@ zipped repo from github.
     - `bash run.sh`
 5. Wait as a virtual environment is created and all dependencies are installed, Story-Pass
 will automatically run once completed.
+
+NOTE: ARM based MacOS will almost certainly fail to run, as the wheels for ARM are NOT included in the sqlcipher3 package.
 
 ## Usage Instructions
 
